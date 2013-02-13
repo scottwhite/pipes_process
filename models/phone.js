@@ -80,8 +80,8 @@ var phone = function(number) {
 
 
   var convert = function(number){
-    if(number && !number.match(/^\1/)){
-      number = "1" + number;
+    if(number && !number.match(/^\+1/)){
+      number = "+1" + number;
     }
     return number;
   };
