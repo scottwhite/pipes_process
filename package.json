@@ -6,10 +6,10 @@
     "start": "node app"
   },
   "dependencies": {
-    "express": "3.1.0",
+    "express": ">=3.1.0",
     "jade": "*",
-    "mysql":"*",
+    "mysql" : "*",
     "underscore": "*",
-    "twilio": "https://github.com/kwhinnery/twilio-node.git"
+    "twilio": "git+https://github.com/kwhinnery/twilio-node.git"
   }
 }
