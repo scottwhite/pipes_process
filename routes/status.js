@@ -3,6 +3,7 @@ var Phone = require('../models/phone'),
 exports.index = function(req, res){
     var r = new twilio.TwimlResponse();
     if(req.body){
+        console.log(req.body);
         var body = req.body;
         var user_phone = new Phone(body.To);
 
