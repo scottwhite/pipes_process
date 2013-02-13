@@ -1,3 +1,6 @@
+var Phone = require('../models/phone'),
+    twilio = require('twilio');
+
 var client_phone = function(body, res) {
         var target_number = body.To,
             caller = body.From;

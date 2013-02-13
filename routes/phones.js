@@ -1,4 +1,6 @@
+
 exports.available = function(req, res){
+    var r = new twilio.TwimlResponse();
     var list_numbers= function(err,response){
         var data=[], numbers = response.available_phone_numbers || [];
         numbers.forEach(function(number){
