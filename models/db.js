@@ -39,7 +39,7 @@ var db = function() {
         pn = pn.substr(pn.length -phone_max, phone_max);
       }
       return client.query(
-        'SELECT pipes_number, user_number, provider_id, time_left * 1000 as time_left from did_mappings ' +
+        'SELECT did_id, pipes_number, user_number, provider_id, time_left * 1000 as time_left from did_mappings ' +
         'where pipes_number= ? ' +
         'and time_left > 0', [pn],
         function select_cb(err,results,fields){

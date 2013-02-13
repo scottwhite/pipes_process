@@ -20,6 +20,7 @@ var phone = function(number) {
     }
     if(phone_hash){
       _us(self).extend(phone_hash);
+      self.id = phone_hash.did_id;
       //node convention of error being 1st arg
       self.emit('ready',null,self);      
     }else{
@@ -89,7 +90,6 @@ var phone = function(number) {
     return _us(self).keys();
   };
 
-  // self.id = id;
   self.attributes = attributes;
   self.find_phone = this.db.find_phone;
   self.is_active = is_active;
