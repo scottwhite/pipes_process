@@ -50,7 +50,7 @@ var db = function() {
     },
     blocked_phones: function(id, callback){
       return client.query(
-        'SELECT number, time_left * 1000 as time_left from did_mappings ' +
+        'SELECT number,time_left from did_mappings ' +
         'where phone_number = ? and time_left > 0', [id],
         function select_cb(err,results,fields){
           var r = results[0];
