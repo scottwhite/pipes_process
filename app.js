@@ -6,7 +6,8 @@
 var express = require('express'),
   creds = require('./config').Creds,
   routes = require('./routes'),
-
+  incoming = require('./routes/incoming'),
+  status = require('./routes/status'),
   phones = require('./routes/phones'),
 
   http = require('http'),
@@ -35,6 +36,8 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
+app.post('/incoming',incoming.answer);
+app.post('/status',status.index);
 app.get('/phones/:number', phones.available);
 
 http.createServer(app).listen(app.get('port'), function(){

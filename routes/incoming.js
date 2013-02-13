@@ -14,7 +14,7 @@ var client_phone = function(body, res) {
     };
 
 
-exports.incoming = function(req,res){
+exports.answer = function(req,res){
     console.log(req.body);
     res.set('Content-Type', 'text/xml');
     if(req.body){
