@@ -8,7 +8,7 @@ var client_phone = function(body, res) {
         var r = new twilio.TwimlResponse();
         user_phone.on('ready', function() {
             console.log("phone is reading, dialing " + target_number);
-            r.dail({timeLimit: user_phone.time_left, callId: caller, action: 'http://process.test.pipes.io/status', method: 'POST'}).number(user_phone.convert(target_number))
+            r.dail({timeLimit: user_phone.time_left, callId: caller}).number(user_phone.convert(target_number))
            res.send(r.toString()); 
         });
     };
