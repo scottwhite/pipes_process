@@ -28,16 +28,12 @@ var Phone = require('../models/phone'),
   Caller: '+16617480240',
   CalledCity: 'PASADENA' }
 */
-var client_phone = function(body, res) {
+var client_phone = function(user_phone,body, res) {
         var target_number = body.To,
-            caller = body.From;
-        var user_phone = new Phone(target_number); //did phone id
-        var r = new twilio.TwimlResponse();
-        user_phone.on('ready', function() {
-            console.log("phone is reading, dialing " + target_number);
+            caller = body.From,
+            r = new twilio.TwimlResponse();
             r.dial({timeLimit: user_phone.time_left, callId: caller},function(node){node.number(user_phone.convert(target_number))})
            res.send(r.toString()); 
-        });
     };
 
 
@@ -51,12 +47,11 @@ exports.answer = function(req,res){
         user_phone.on('ready', function() {
             console.log("phone is ready, dialing " + user_phone.user_number);
             try{
-                client_phone(body,res);
+                client_phone(user_phone,body,res);
             }catch(e){
                 console.log(e);
                 r = new twilio.TwimlResponse();
-                r.say('Not working, hanging up')
-                r.hangup();
+                r.say('Not working, hanging up').hangup();
                 res.send(r.toString())
             }
             
