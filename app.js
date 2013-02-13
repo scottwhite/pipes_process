@@ -9,6 +9,7 @@ var express = require('express'),
   incoming = require('./routes/incoming'),
   status = require('./routes/status'),
   phones = require('./routes/phones'),
+  client = require('./routes/client'),
 
   http = require('http'),
   path = require('path'),
@@ -38,6 +39,8 @@ app.configure('development', function(){
 app.get('/', routes.index);
 app.post('/incoming',incoming.answer);
 app.post('/status',status.index);
+app.post('/client_incoming',client.answer);
+app.post('/client_completed',client.status);
 app.get('/phones/:number', phones.available);
 
 http.createServer(app).listen(app.get('port'), function(){
