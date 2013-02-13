@@ -32,8 +32,11 @@ var client_phone = function(user_phone,body, res) {
         var target_number = body.To,
             caller = body.From,
             r = new twilio.TwimlResponse();
-            r.dial({timeLimit: user_phone.time_left, callId: caller},function(node){node.number(user_phone.convert(target_number))})
-           res.send(r.toString()); 
+
+        r.dial({timeLimit: user_phone.time_left, callId: caller},
+            function(node){node.number(user_phone.convert(target_number))});
+        console.log(r.toString());
+        res.send(r.toString()); 
     };
 
 
