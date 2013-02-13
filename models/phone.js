@@ -43,9 +43,8 @@ var phone = function(number) {
     }  
   };
   
-  var update_time = function(time_used_minutes){
-    var ts = time_used_minutes * 60;
-    self.db.update_call_usage(self.id,ts,send_update_event);
+  var update_time = function(time_used_secs){
+    self.db.update_call_usage(self.id,time_used_secs,send_update_event);
     return self;
   };
   
