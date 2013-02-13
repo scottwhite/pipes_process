@@ -10,6 +10,6 @@
     "jade": "*",
     "mysql":"*",
     "underscore": "*",
-    "twilio": ">= 0.8"
+    "twilio": "https://github.com/kwhinnery/twilio-node.git"
   }
 }
