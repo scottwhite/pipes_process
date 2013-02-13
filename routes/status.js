@@ -29,7 +29,7 @@ exports.index = function(req, res){
         var user_phone = new Phone(body.To);
         user_phone.on('ready', function() {
             try{
-                user_phone.update_time(parseInt(body.Duration)).on('failed',function(err){
+                user_phone.update_time(parseInt(body.Duration)*60).on('failed',function(err){
                     console.log(err);
                 })
             }catch(e){
