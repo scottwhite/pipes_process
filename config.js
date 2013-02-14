@@ -6,7 +6,7 @@ module.exports = {
     hostname: 'process.test.pipes.io'
   },
   Database: {
-    name: 'pipes',
+    name: 'pipes_staging',
     user: 'root',
     password: null
   } 

@@ -61,9 +61,9 @@ exports.answer = function(req,res){
             console.log("phone is ready, dialing " + user_phone.user_number);
             try{
                 if (user_phone.convert(user_phone.user_number) == body.From) {
-                    r = new Twiml.TwimlResponse();
+                    r = new twilio.TwimlResponse();
                     // gen token
-                    user_phone.unqiue_token().on('update',function(err,token){
+                    user_phone.unique_token().on('update',function(err,token){
                         r.gather({
                         //TODO: get url from env fool
                             action: 'http://process.test.pipes.io/digits/' + body.To + '?token=' + token,
@@ -72,6 +72,7 @@ exports.answer = function(req,res){
                         function(){
                             this.say('Enter in number to call, press pound when completed');
                         }).say('You did not enter a number, goodbye');
+                        res.send(r.toString());
                     });
                     
                 }else{
@@ -91,11 +92,12 @@ exports.answer = function(req,res){
 };
 
 exports.digits = function(req,res){
-    var digits = req.params.Digits,
+    console.log(req.query);
+    var digits = req.params.Digits || req.query.Digits,
         number = req.params.number,
-        token = req.params.toke;
-    var r = new Twiml.TwimlResponse();
-    if(!toke || !digits || !number){
+        token = req.params.token || req.query.token;
+    var r = new twilio.TwimlResponse();
+    if(!token || !digits || !number){
         console.log("missing param");
         console.log(req.params);
         r.hangup();
@@ -104,10 +106,11 @@ exports.digits = function(req,res){
     }
     user_phone = new Phone(number);
     user_phone.on('ready', function() {
-        user_phone.has_token(toke,function(err,does){
+        user_phone.has_token(token,function(err,does){
+            console.log('have token: ' + does);
             if(does){
-                client_outbound(user_number, digits,res);
-                user_phone.remove_token(function(err,results){});
+                client_outbound(user_phone, digits,res);
+                user_phone.remove_token(token);
             }else{
                 res.send(r.hangup().toString());
             }

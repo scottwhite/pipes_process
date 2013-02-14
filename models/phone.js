@@ -91,6 +91,7 @@ var phone = function(number) {
   var unique_token = function(){
     var token =  Math.random().toString(36).substring(3);
     self.db.insert_request_token(self.id, token,send_update_event);
+    return self;
   };
 
   var has_token = function(token,cb){
@@ -98,6 +99,7 @@ var phone = function(number) {
   };
   var remove_token = function(token,cb){
     self.db.delete_request_token(self.id, token,send_update_event);
+    return self;
   };
 
   self.attributes = attributes;
