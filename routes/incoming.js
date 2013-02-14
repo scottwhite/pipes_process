@@ -32,7 +32,7 @@ var Phone = require('../models/phone'),
 var client_outbound = function(user_phone,digits, res){
     var caller =user_phone.user_number,
             r = new twilio.TwimlResponse();
-    r.dial({timeLimit: user_phone.time_left, callId: caller},
+    r.dial({timeLimit: user_phone.time_left, callId: user_phone.pipes_number},
             function(node){node.number(user_phone.convert(digits));});
         console.log(r.toString());
         res.send(r.toString()); 
