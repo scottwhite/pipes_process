@@ -1,3 +1,6 @@
+var Phone = require('../models/phone'),
+    twilio = require('twilio');
+
 var bill_client_phone = function(body, res) {
     var id = body.Caller.split(':')[1];
     var user_phone = new Phone(id); //did phone id
