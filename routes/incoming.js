@@ -111,7 +111,7 @@ exports.digits = function(req,res){
             }else{
                 res.send(r.hangup().toString());
             }
-        }
+        });
         
     });
 };
