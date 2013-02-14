@@ -104,8 +104,15 @@ exports.digits = function(req,res){
     }
     user_phone = new Phone(number);
     user_phone.on('ready', function() {
-        client_outbound(user_number, digits,res);
-        user_phone.remove_token(function(err,results){});
+        user_phone.has_token(toke,function(err,does){
+            if(does){
+                client_outbound(user_number, digits,res);
+                user_phone.remove_token(function(err,results){});
+            }else{
+                res.send(r.hangup().toString());
+            }
+        }
+        
     });
 };
 
