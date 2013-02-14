@@ -28,13 +28,22 @@ var Phone = require('../models/phone'),
   Caller: '+16617480240',
   CalledCity: 'PASADENA' }
 */
+
+var client_outbound = function(user_phone,digits, res){
+    var caller =user_phone.user_number,
+            r = new twilio.TwimlResponse();
+    r.dial({timeLimit: user_phone.time_left, callId: caller},
+            function(node){node.number(user_phone.convert(digits));});
+        console.log(r.toString());
+        res.send(r.toString()); 
+};
+
 var client_phone = function(user_phone,body, res) {
-        var target_number = body.To,
-            caller = body.From,
+        var caller = body.From,
             r = new twilio.TwimlResponse();
 
         r.dial({timeLimit: user_phone.time_left, callId: caller},
-            function(node){node.number(user_phone.convert(user_phone.user_number))});
+            function(node){node.number(user_phone.convert(user_phone.user_number));});
         console.log(r.toString());
         res.send(r.toString()); 
     };
@@ -45,22 +54,59 @@ exports.answer = function(req,res){
     res.set('Content-Type', 'text/xml');
     if(req.body){
         var body = req.body,
-            r,
-            user_phone = new Phone(body.To);
+        r,
+        user_phone = new Phone(body.To);
+        
         user_phone.on('ready', function() {
             console.log("phone is ready, dialing " + user_phone.user_number);
             try{
-                client_phone(user_phone,body,res);
+                if (user_phone.convert(user_phone.user_number) == body.From) {
+                    r = new Twiml.TwimlResponse();
+                    // gen token
+                    user_phone.unqiue_token().on('update',function(err,token){
+                        r.gather({
+                        //TODO: get url from env fool
+                            action: 'http://process.test.pipes.io/digits/' + body.To + '?token=' + token,
+                            method:'GET'
+                        },
+                        function(){
+                            this.say('Enter in number to call, press pound when completed');
+                        }).say('You did not enter a number, goodbye');
+                    });
+                    
+                }else{
+                    client_phone(user_phone,body,res);    
+                }
+                
             }catch(e){
                 console.log(e);
                 r = new twilio.TwimlResponse();
                 r.say('Not working, hanging up').hangup();
-                res.send(r.toString())
-            }
-            
+                res.send(r.toString());
+            }            
         });
 
     }
 
 };
+
+exports.digits = function(req,res){
+    var digits = req.params.Digits,
+        number = req.params.number,
+        toke = req.params.toke;
+    var r = new Twiml.TwimlResponse();
+    if(!toke || !digits || !number){
+        console.log("missing param");
+        console.log(req.params);
+        r.hangup();
+        res.send(r.toString());
+        return;
+    }
+    user_phone = new Phone(number);
+    user_phone.on('ready', function() {
+        client_outbound(user_number, digits,res);
+        user_phone.remove_token(function(err,results){});
+    });
+};
+
 

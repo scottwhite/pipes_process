@@ -74,10 +74,7 @@ var phone = function(number) {
     // and date_add(dup.expiration_date, INTERVAL 3 WEEK) > NOW();
   };
   
-  var is_active = function(){
-    
-  };
-
+  
 
   var convert = function(number){
     if(number && !number.match(/^\+1/)){
@@ -90,13 +87,28 @@ var phone = function(number) {
     return _us(self).keys();
   };
 
+
+  var unique_token = function(){
+    var token =  Math.random().toString(36).substring(3);
+    self.db.insert_request_token(self.id, token,send_update_event);
+  };
+
+  var has_token = function(token,cb){
+    self.db.has_token_with_did(self.id,token,cb);
+  };
+  var remove_token = function(token,cb){
+    self.db.delete_request_token(self.id, token,send_update_event);
+  };
+
   self.attributes = attributes;
   self.find_phone = this.db.find_phone;
-  self.is_active = is_active;
   self.update_time = update_time;
   self.block_caller = block_caller;
   self.enter_call = enter_call;
   self.convert = convert;
+  self.unique_token = unique_token;
+  self.has_token = has_token;
+  self.remote_token = remote_token;
   if (number) {
     // look it up
     _db.phone_by_number(number,properties_from_db);

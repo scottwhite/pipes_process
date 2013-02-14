@@ -82,6 +82,42 @@ var db = function() {
            callback(err,results.affectedRows);
          }
        );      
+    },
+    insert_request_token: function(id, token,callback){
+      return client.query(
+         'insert into request_tokens (did_id, token) values(?,?)',
+         [id,token],
+         function update_cb(err, results, fields) {
+           if (err) {
+             throw err;
+           }
+           callback(err,token);
+         }
+       );      
+    },
+    has_token_with_did: function(did_id, token,callback){
+      return client.query(
+        'SELECT id, token, did_id from request_tokens ' +
+        'where did_id = ?  and token = ?', [did_id, token],
+        function select_cb(err,results,fields){
+          if(!results){
+            callback(err,results);
+          }
+          callback(err,true);
+        }
+      );
+    },
+    delete_request_token: function(did_id, token, callback){
+      return client.query(
+         'delete from request_tokens where did_id = ? and token = ?',
+         [did_id, token],
+         function update_cb(err, results, fields) {
+           if (err) {
+             throw err;
+           }
+           callback(err,results.affectedRows);
+         }
+       );
     }
     
   };

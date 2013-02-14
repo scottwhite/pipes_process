@@ -42,6 +42,7 @@ app.post('/status',status.index);
 app.post('/client_incoming',client.answer);
 app.post('/client_completed',client.status);
 app.get('/phones/:number', phones.available);
+app.get('/digits/:number', incoming.digits);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
