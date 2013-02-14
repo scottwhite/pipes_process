@@ -66,11 +66,12 @@ exports.answer = function(req,res){
                     user_phone.unique_token().on('update',function(err,token){
                         r.gather({
                         //TODO: get url from env fool
+                            timeout: 15,
                             action: 'http://process.test.pipes.io/digits/' + body.To + '?token=' + token,
                             method:'GET'
                         },
                         function(){
-                            this.say('Enter in number to call, press pound when completed');
+                            this.say('Welconme to Pipes.  Enter in number to call through your Pipes number, press pound when completed',{voice:'woman'});
                         }).say('You did not enter a number, goodbye');
                         res.send(r.toString());
                     });
