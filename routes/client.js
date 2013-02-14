@@ -4,7 +4,6 @@ var bill_client_phone = function(body, res) {
     user_phone.on('ready',function(){
         user_phone.enter_call(body);
         user_phone.update_time(body.Duration * 60);
-        res.send();
     });
 };
 
@@ -42,19 +41,7 @@ exports.status = function(req, res){
     var r = new twilio.TwimlResponse();
     if(req.body){
         console.log(req.body);
-        var body = req.body;
-        var user_phone = new Phone(body.To);
-        user_phone.on('ready', function() {
-            try{
-                user_phone.update_time(parseInt(body.Duration)*60).on('failed',function(err){
-                    console.log(err);
-                })
-            }catch(e){
-                console.log(e);
-            }
-            
-        });
-
+        bill_client_phone(req,res)
     }
     r.hangup();
     res.send(r.toString());
