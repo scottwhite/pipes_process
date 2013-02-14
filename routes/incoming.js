@@ -93,7 +93,7 @@ exports.answer = function(req,res){
 exports.digits = function(req,res){
     var digits = req.params.Digits,
         number = req.params.number,
-        toke = req.params.toke;
+        token = req.params.toke;
     var r = new Twiml.TwimlResponse();
     if(!toke || !digits || !number){
         console.log("missing param");

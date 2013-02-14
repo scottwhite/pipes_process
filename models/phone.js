@@ -108,7 +108,7 @@ var phone = function(number) {
   self.convert = convert;
   self.unique_token = unique_token;
   self.has_token = has_token;
-  self.remote_token = remote_token;
+  self.remove_token = remove_token;
   if (number) {
     // look it up
     _db.phone_by_number(number,properties_from_db);
