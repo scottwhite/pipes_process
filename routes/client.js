@@ -16,7 +16,7 @@ var client_phone = function(body, res) {
     var r = new twilio.TwimlResponse();
     user_phone.on('ready', function() {
         r.dial({timeLimit: user_phone.time_left, callerId: user_phone.pipes_number},
-        function(node){node.number(user_phone.convert(user_phone.user_number))});
+        function(node){node.number(user_phone.convert(body.PhoneNumber))});
             console.log(r.toString());
             res.send(r.toString()); 
         });
