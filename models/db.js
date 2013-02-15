@@ -20,7 +20,7 @@ var db = function() {
     
     phone_by_id: function(pid,callback){
       return client.query(
-        'SELECT dids_id, pipes_number, user_number, provider_id, time_left from did_mappings ' +
+        'SELECT did_id, pipes_number, user_number, provider_id, time_left from did_mappings ' +
         'where did_id = ? ' +
         'and time_left > 0', [pid],
         function select_cb(err,results,fields){

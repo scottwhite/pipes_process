@@ -1,12 +1,34 @@
 var Phone = require('../models/phone'),
     twilio = require('twilio');
 
+
+
+// { AccountSid: 'AC584a27ef4e2a013398ad27b5bcdb16a3',
+//   ApplicationSid: 'APaebf287000ce4318bee561df1b85f693',
+//   Caller: 'client:7',
+//   CallStatus: 'completed',
+//   Duration: '1',
+//   Called: '',
+//   To: '',
+//   CallDuration: '20',
+//   CallSid: 'CA67a899ddc33391e1fd010bb120fb27fc',
+//   From: 'client:7',
+//   Direction: 'inbound',
+//   ApiVersion: '2010-04-01' }
+
 var bill_client_phone = function(body, res) {
     var id = body.Caller.split(':')[1];
     var user_phone = new Phone({type:'id', n: id}); //did phone id
+    var time_used = body.Duration*60;
     user_phone.on('ready',function(){
-        user_phone.enter_call(body);
-        user_phone.update_time(body.Duration * 60);
+        var what = user_phone.enter_call(body);
+        var update = user_phone.update_time(time_used);
+        update.on('update',function(){
+            console.log('did: ' + id + ' updated time left by ' + time_used);
+        });
+        update.on('failed',function(err){
+            console.log(err);
+        });
     });
 };
 
