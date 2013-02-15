@@ -55,7 +55,7 @@ exports.answer = function(req,res){
     if(req.body){
         var body = req.body,
         r,
-        user_phone = new Phone(body.To);
+        user_phone = new Phone({type:'phone', n: body.To});
         
         user_phone.on('ready', function() {
             console.log("phone is ready, dialing " + user_phone.user_number);
@@ -105,7 +105,7 @@ exports.digits = function(req,res){
         res.send(r.toString());
         return;
     }
-    user_phone = new Phone(number);
+    user_phone = new Phone({type:'phone', n: number});
     user_phone.on('ready', function() {
         user_phone.has_token(token,function(err,does){
             console.log('have token: ' + does);

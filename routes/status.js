@@ -26,7 +26,7 @@ exports.index = function(req, res){
     if(req.body){
         console.log(req.body);
         var body = req.body;
-        var user_phone = new Phone(body.To);
+        var user_phone = new Phone({type:'phone', n: body.To});
         user_phone.on('ready', function() {
             try{
                 user_phone.update_time(parseInt(body.Duration)*60).on('failed',function(err){

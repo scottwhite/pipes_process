@@ -111,9 +111,10 @@ var phone = function(number) {
   self.unique_token = unique_token;
   self.has_token = has_token;
   self.remove_token = remove_token;
-  if (number) {
-    // look it up
-    _db.phone_by_number(number,properties_from_db);
+  if (number.type=='phone') {
+    _db.phone_by_number(number.n,properties_from_db);
+  }else{
+    _db.phone_by_id(number.n,properties_from_db);
   }
   return self;
 };
