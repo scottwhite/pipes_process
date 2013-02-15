@@ -1,9 +1,11 @@
 /*jshint evil: true, boss: true, node: true*/
 var db = function() {
   var Client = require('mysql'),
-      config = require('../config').Database,
-      _us = require('underscore');
-  client = Client.createConnection({user: config.user, password: config.password, database: config.name});
+      db_config = require('../config').Database,
+      _us = require('underscore'),
+      config = db_config[process.env.PIPES_ENV || 'staging'];
+      console.log(config);
+  var client = Client.createConnection({user: config.user, password: config.password, database: config.name});
     
   return {
     client: client,

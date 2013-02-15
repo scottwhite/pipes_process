@@ -6,8 +6,25 @@ module.exports = {
     hostname: 'process.test.pipes.io'
   },
   Database: {
-    name: 'pipes_staging',
-    user: 'root',
-    password: null
+    dev: {
+      name: 'pipes_dev',
+      user: 'root',
+      password: null
+    },
+    test: {
+      name: 'pipes_test',
+      user: 'root',
+      password: null
+    },
+    staging:{
+      name: 'pipes_staging',
+      user: 'root',
+      password: null
+    },
+    prod:{
+      name: 'pipes',
+      user: 'root',
+      password: null
+    }
   } 
 };
