@@ -55,7 +55,7 @@ exports.status = function(req, res){
     var r = new twilio.TwimlResponse();
     if(req.body){
         console.log(req.body);
-        bill_client_phone(req,res)
+        bill_client_phone(req.body,res)
     }
     r.hangup();
     res.send(r.toString());
