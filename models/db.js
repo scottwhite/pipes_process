@@ -6,7 +6,26 @@ var db = function() {
       config = db_config[process.env.PIPES_ENV || 'staging'];
       console.log(config);
   var client = Client.createConnection({user: config.user, password: config.password, database: config.name});
-    
+
+  handleDisconnect = function(connection){
+    client.on('error', function(err) {
+      if (!err.fatal) {
+        return;
+      }
+
+      if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
+        throw err;
+      }
+
+      console.log('Re-connecting lost connection: ' + err.stack);
+
+      connection = mysql.createConnection(connection.config);
+      handleDisconnect(connection);
+      connection.connect();
+    });
+  };
+  handleDisconnect(client);
+
   return {
     client: client,
     user_phones: function(callback){
