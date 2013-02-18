@@ -1,11 +1,11 @@
 /*jshint evil: true, boss: true, node: true*/
 var db = function() {
-  var Client = require('mysql'),
+  var mysql = require('mysql'),
       db_config = require('../config').Database,
       _us = require('underscore'),
       config = db_config[process.env.PIPES_ENV || 'staging'];
       console.log(config);
-  var client = Client.createConnection({user: config.user, password: config.password, database: config.name});
+  var client = mysql.createConnection({user: config.user, password: config.password, database: config.name});
 
   handleDisconnect = function(connection){
     client.on('error', function(err) {
