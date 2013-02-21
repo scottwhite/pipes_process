@@ -32,6 +32,13 @@ var bill_client_phone = function(body, res) {
     });
 };
 
+var call_back_for_billing = function(req,call_sid){
+  req.app.get('provider').calls(call_sid).get(function(err,data){
+    console.log(data);
+  });
+}
+
+
 var client_phone = function(body, res) {
     var id = body.Caller.split(':')[1];
     var user_phone = new Phone({type: 'id', n: id}); //did phone id
@@ -77,6 +84,7 @@ exports.status = function(req, res){
     var r = new twilio.TwimlResponse();
     if(req.body){
         console.log(req.body);
+        call_back_for_billing(req, req.body.CallSid);
         bill_client_phone(req.body,res)
     }
     r.hangup();
