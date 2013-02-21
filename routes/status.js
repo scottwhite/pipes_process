@@ -21,6 +21,12 @@ var Phone = require('../models/phone'),
   CalledState: 'MD',
   From: '+17378742833' }
 */
+
+var call_back_for_billing = function(req,call_sid){
+  req.app.get('provider').calls(call_sid).get(function(err,data){
+    console.log(data);
+  });
+}
 exports.index = function(req, res){
     var r = new twilio.TwimlResponse();
     if(req.body){
@@ -29,6 +35,7 @@ exports.index = function(req, res){
         var user_phone = new Phone({type:'phone', n: body.To});
         user_phone.on('ready', function() {
             try{
+              call_back_for_billing(req,req.body.CallSid);
                 user_phone.update_time(parseInt(body.Duration)*60).on('failed',function(err){
                     console.log(err);
                 })
