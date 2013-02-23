@@ -8,12 +8,13 @@ var db = function() {
   var client = mysql.createConnection({user: config.user, password: config.password, database: config.name});
 
   handleDisconnect = function(connection){
-    client.on('error', function(err) {
+    connection.on('error', function(err) {
       if (!err.fatal) {
         return;
       }
 
       if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
+        console.error(err.code);
         throw err;
       }
 
