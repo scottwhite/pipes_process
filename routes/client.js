@@ -27,6 +27,7 @@ var bill_client_phone = function(body, res) {
         var update = user_phone.update_time(time_used);
         update.on('update',function(){
             console.log('did: ' + id + ' updated time left by ' + time_used);
+            return;
         });
         update.on('failed',function(err){
             console.log(err);

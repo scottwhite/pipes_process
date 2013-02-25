@@ -50,7 +50,19 @@ exports.index = function(req, res){
     res.send(r.toString());
 };
 
-
+// { AccountSid: 'AC584a27ef4e2a013398ad27b5bcdb16a3',
+//   ApplicationSid: 'APaebf287000ce4318bee561df1b85f693',
+//   CallStatus: 'in-progress',
+//   DialCallSid: 'CAe57cfd8046860b81faa629d36fd81cfa',
+//   To: '',
+//   Called: '',
+//   DialCallStatus: 'completed',
+//   Direction: 'inbound',
+//   ApiVersion: '2010-04-01',
+//   Caller: 'client:4',
+//   CallSid: 'CA1fb115ad471cd6e32ac78232d1a5a533',
+//   DialCallDuration: '15',
+//   From: 'client:4' }
 exports.routed_status = function(req,res){
   console.log(req.body);
   res.send('ok');
