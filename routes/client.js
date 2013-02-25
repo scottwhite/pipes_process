@@ -1,5 +1,7 @@
 var Phone = require('../models/phone'),
-    twilio = require('twilio');
+    twilio = require('twilio'),
+    config = require('../config').process_url,
+    process_url = config[process.env.PIPES_ENV || 'staging'];
 
 
 
@@ -44,7 +46,9 @@ var client_phone = function(body, res) {
     var user_phone = new Phone({type: 'id', n: id}); //did phone id
     var r = new twilio.TwimlResponse();
     user_phone.on('ready', function() {
-        r.dial({timeLimit: user_phone.time_left, callerId: user_phone.pipes_number},
+        r.dial({
+            action: process_url + '/routed_status',
+            timeLimit: user_phone.time_left, callerId: user_phone.pipes_number},
         function(node){node.number(user_phone.convert(body.PhoneNumber))});
             console.log(r.toString());
             res.send(r.toString()); 

@@ -41,6 +41,7 @@ app.post('/incoming',incoming.answer);
 app.get('/digits/:number', incoming.digits);
 
 app.post('/status',status.index);
+app.post('/routed_status',status.routed_status);
 app.post('/client_incoming',client.answer);
 app.post('/client_completed',client.status);
 app.get('/phones/:number', phones.available);

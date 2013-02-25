@@ -1,5 +1,7 @@
 var Phone = require('../models/phone'),
-    twilio = require('twilio');
+    twilio = require('twilio'),
+    config = require('../config').process_url,
+    process_url = config[process.env.PIPES_ENV || 'staging'];
 
 /*
 { AccountSid: 'AC584a27ef4e2a013398ad27b5bcdb16a3',
@@ -42,7 +44,9 @@ var client_phone = function(user_phone,body, res) {
         var caller = body.From,
             r = new twilio.TwimlResponse();
 
-        r.dial({timeLimit: user_phone.time_left, callerId: caller},
+        r.dial({
+          action: process_url + '/routed_status',
+          timeLimit: user_phone.time_left, callerId: caller},
             function(node){node.number(user_phone.convert(user_phone.user_number));});
         console.log(r.toString());
         res.send(r.toString()); 
@@ -67,7 +71,7 @@ exports.answer = function(req,res){
                         r.gather({
                         //TODO: get url from env fool
                             timeout: 15,
-                            action: 'http://process.test.pipes.io/digits/' + body.To + '?token=' + token,
+                            action:   process_url + '/digits/' + body.To + '?token=' + token,
                             method:'GET'
                         },
                         function(){

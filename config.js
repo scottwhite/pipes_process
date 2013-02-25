@@ -4,6 +4,11 @@ module.exports = {
       sid: 'AC584a27ef4e2a013398ad27b5bcdb16a3',
       auth_token: '5602b73423d50848001fb55d719c6c8a'
   },
+  process_url: {
+    dev: 'http://localhost:3000',
+    staging: 'https://process-test.pipes.io'
+    prod: 'https://process.pipes.io'
+  },
   Database: {
     dev: {
       name: 'pipes_dev',
