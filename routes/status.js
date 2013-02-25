@@ -35,7 +35,7 @@ exports.index = function(req, res){
         var user_phone = new Phone({type:'phone', n: body.To});
         user_phone.on('ready', function() {
             try{
-              call_back_for_billing(req,req.body.CallSid);
+              // call_back_for_billing(req,req.body.CallSid);
                 user_phone.update_time(parseInt(body.Duration)*60).on('failed',function(err){
                     console.log(err);
                 })
@@ -53,4 +53,5 @@ exports.index = function(req, res){
 
 exports.routed_status = function(req,res){
   console.log(req.body);
+  res.send('ok');
 }

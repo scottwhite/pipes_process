@@ -88,7 +88,7 @@ exports.status = function(req, res){
     var r = new twilio.TwimlResponse();
     if(req.body){
         console.log(req.body);
-        call_back_for_billing(req, req.body.CallSid);
+        // call_back_for_billing(req, req.body.CallSid);
         bill_client_phone(req.body,res)
     }
     r.hangup();
