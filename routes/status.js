@@ -49,3 +49,8 @@ exports.index = function(req, res){
     r.hangup();
     res.send(r.toString());
 };
+
+
+exports.routed_status = function(req,res){
+  console.log(req.body);
+}
