@@ -64,6 +64,7 @@ exports.index = function(req, res){
 //   DialCallDuration: '15',
 //   From: 'client:4' }
 exports.routed_status = function(req,res){
+  var r = new twilio.TwimlResponse();
   console.log(req.body);
-  res.send('ok');
+  res.send(r.hangup().toString());
 }
