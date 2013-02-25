@@ -6,7 +6,7 @@ module.exports = {
   },
   process_url: {
     dev: 'http://localhost:3000',
-    staging: 'https://process-test.pipes.io'
+    staging: 'https://process-test.pipes.io',
     prod: 'https://process.pipes.io'
   },
   Database: {
