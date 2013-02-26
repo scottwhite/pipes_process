@@ -10,6 +10,8 @@ var db = function() {
   handleDisconnect = function(connection){
     connection.on('error', function(err) {
       if (!err.fatal) {
+        console.error("Non fatal error return from handler which is wrong behavior");
+        console.error(err.code);
         return;
       }
 
