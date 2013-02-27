@@ -39,7 +39,7 @@ var db = function() {
         if(err) throw err;
         connection.on('error',function(err){
           console.error(err.code);
-          console.error(error.stack);
+          console.error(err.stack);
         });
         connection.query(
           sql,values,

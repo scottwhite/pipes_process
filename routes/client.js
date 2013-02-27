@@ -47,13 +47,19 @@ var client_phone = function(body, res) {
     var user_phone = new Phone({type: 'id', n: id}); //did phone id
     var r = new twilio.TwimlResponse();
     user_phone.on('ready', function() {
-        r.dial({
-            action: process_url + '/routed_status',
-            timeLimit: user_phone.time_left, callerId: user_phone.pipes_number},
-        function(node){node.number(user_phone.convert(body.PhoneNumber))});
-            console.log(r.toString());
-            res.send(r.toString()); 
+        // check target number is not a pipes number, if it is we have to use the real number instead
+        Phone.check_existing(body.PhoneNumber, function(err,phone_hash){
+            var target_number = phone_hash ? phone_hash.user_number : body.PhoneNumber;
+            r.dial({
+                action: process_url + '/routed_status',
+                timeLimit: user_phone.time_left, callerId: user_phone.pipes_number},
+                function(node){node.number(user_phone.convert(target_number))
+                });
+                console.log(r.toString());
+                res.send(r.toString()); 
+            });
         });
+        
 };
 
 // { AccountSid: 'AC584a27ef4e2a013398ad27b5bcdb16a3',

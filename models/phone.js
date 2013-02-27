@@ -119,6 +119,12 @@ var phone = function(number) {
   return self;
 };
 
+phone.check_existing = function(phone_number,callback){
+  _db.phone_by_number(phone_number,function(err,phone_hash){
+    callback(err,phone_hash);
+  });
+}
+
 util.inherits(phone, EventEmitter);
 
 module.exports = phone;
